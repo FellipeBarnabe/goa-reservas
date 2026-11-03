@@ -12,14 +12,19 @@
   --cor-sucesso: #1d6b45;
 
   --fonte-titulo: "Cormorant Garamond", Georgia, serif;
-  --fonte-texto: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --fonte-texto:
+    "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 
   --raio: 10px;
   --sombra: 0 1px 3px rgba(0, 0, 0, 0.06), 0 10px 30px rgba(0, 0, 0, 0.05);
 }
 
 /* ===== Base ===== */
-*, *::before, *::after { box-sizing: border-box; }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 
 body {
   margin: 0;
@@ -32,19 +37,32 @@ body {
   line-height: 1.6;
 }
 
-main { flex: 1; }
+main {
+  flex: 1;
+}
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
   margin: 0 0 0.5em;
   font-family: var(--fonte-titulo);
   font-weight: 600;
   line-height: 1.15;
 }
-h1 { font-size: clamp(2.2rem, 5vw, 3.6rem); }
-h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); }
+h1 {
+  font-size: clamp(2.2rem, 5vw, 3.6rem);
+}
+h2 {
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+}
 
-a { color: var(--cor-destaque-escura); }
-img { max-width: 100%; display: block; }
+a {
+  color: var(--cor-destaque-escura);
+}
+img {
+  max-width: 100%;
+  display: block;
+}
 
 .container {
   width: 100%;
@@ -53,7 +71,10 @@ img { max-width: 100%; display: block; }
   padding: 0 1rem;
 }
 
-.secao { padding-top: 3rem; padding-bottom: 3rem; }
+.secao {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
 
 /* Link para quem navega pelo teclado pular o menu */
 .pular {
@@ -64,7 +85,9 @@ img { max-width: 100%; display: block; }
   padding: 0.5rem 1rem;
   z-index: 100;
 }
-.pular:focus { left: 0; }
+.pular:focus {
+  left: 0;
+}
 
 :focus-visible {
   outline: 3px solid rgba(168, 129, 75, 0.5);
@@ -117,7 +140,9 @@ img { max-width: 100%; display: block; }
   font-size: 0.9rem;
   letter-spacing: 0.04em;
 }
-.menu a.ativo { color: var(--cor-destaque); }
+.menu a.ativo {
+  color: var(--cor-destaque);
+}
 
 .menu-botao {
   display: none;
@@ -142,12 +167,26 @@ img { max-width: 100%; display: block; }
   font-weight: 600;
   text-decoration: none;
   cursor: pointer;
-  transition: background 0.15s, border-color 0.15s, color 0.15s;
+  transition:
+    background 0.15s,
+    border-color 0.15s,
+    color 0.15s;
 }
-.btn--destaque { background: var(--cor-destaque); color: #fff !important; }
-.btn--destaque:hover { background: var(--cor-destaque-escura); }
-.btn--contorno { background: transparent; color: var(--cor-texto); border-color: var(--cor-borda); }
-.btn--contorno:hover { background: #fff; }
+.btn--destaque {
+  background: var(--cor-destaque);
+  color: #fff !important;
+}
+.btn--destaque:hover {
+  background: var(--cor-destaque-escura);
+}
+.btn--contorno {
+  background: transparent;
+  color: var(--cor-texto);
+  border-color: var(--cor-borda);
+}
+.btn--contorno:hover {
+  background: #fff;
+}
 
 /* ===== Hero ===== */
 .hero {
@@ -162,7 +201,11 @@ img { max-width: 100%; display: block; }
   text-transform: uppercase;
   color: var(--cor-destaque);
 }
-.hero__texto { max-width: 560px; font-size: 1.1rem; opacity: 0.85; }
+.hero__texto {
+  max-width: 560px;
+  font-size: 1.1rem;
+  opacity: 0.85;
+}
 
 /* ===== Cartão ===== */
 .cartao {
@@ -181,8 +224,16 @@ img { max-width: 100%; display: block; }
   border-radius: var(--raio);
   font-size: 0.95rem;
 }
-.alerta--sucesso { background: #ecf8f1; border-color: #b7e2c9; color: var(--cor-sucesso); }
-.alerta--erro { background: #fdf1ef; border-color: #f3c5be; color: var(--cor-perigo); }
+.alerta--sucesso {
+  background: #ecf8f1;
+  border-color: #b7e2c9;
+  color: var(--cor-sucesso);
+}
+.alerta--erro {
+  background: #fdf1ef;
+  border-color: #f3c5be;
+  color: var(--cor-perigo);
+}
 
 /* ===== Rodapé ===== */
 .rodape {
@@ -200,7 +251,9 @@ img { max-width: 100%; display: block; }
 
 /* ===== Responsivo ===== */
 @media (max-width: 720px) {
-  .menu-botao { display: inline-block; }
+  .menu-botao {
+    display: inline-block;
+  }
 
   .menu {
     display: none;
@@ -215,9 +268,226 @@ img { max-width: 100%; display: block; }
     background: var(--cor-escura);
     border-top: 1px solid rgba(255, 255, 255, 0.1);
   }
-  .menu--aberto { display: flex; }
-  .menu a { padding: 0.8rem 0; }
-  .menu .btn { margin-top: 0.5rem; }
+  .menu--aberto {
+    display: flex;
+  }
+  .menu a {
+    padding: 0.8rem 0;
+  }
+  .menu .btn {
+    margin-top: 0.5rem;
+  }
 
-  .hero { padding: 3.5rem 0; }
+  .hero {
+    padding: 3.5rem 0;
+  }
+}
+
+/* ============================================================
+   Etapa 2: site público (busca, cartões de hotel, quartos)
+   ============================================================ */
+
+.subtitulo {
+  color: var(--cor-texto-suave);
+  margin-top: -0.25em;
+}
+.hero--hotel {
+  padding: 3.5rem 0;
+}
+
+/* ===== Campos de formulário (reaproveitados nas próximas etapas) ===== */
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+.campo label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--cor-texto-suave);
+}
+.campo input,
+.campo select,
+.campo textarea {
+  width: 100%;
+  padding: 0.65rem 0.8rem;
+  border: 1px solid #d6cfc2;
+  border-radius: 8px;
+  font: inherit;
+  color: var(--cor-texto);
+  background: #fff;
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s;
+}
+.campo input:focus,
+.campo select:focus,
+.campo textarea:focus {
+  outline: none;
+  border-color: var(--cor-destaque);
+  box-shadow: 0 0 0 3px rgba(168, 129, 75, 0.2);
+}
+
+/* ===== Barra de busca ===== */
+
+.busca {
+  position: relative;
+  margin-top: -2.2rem;
+  display: grid;
+  grid-template-columns: 2fr 1.2fr 1.2fr 0.8fr 0.8fr auto;
+  align-items: end;
+  gap: 1rem;
+  padding: 1.25rem;
+  background: var(--cor-card);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+  box-shadow: var(--sombra);
+}
+
+/* ===== Grade e cartões de hotel ===== */
+.grade-cartoes {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 1.5rem;
+}
+
+.cartao-hotel {
+  display: flex;
+  flex-direction: column;
+  background: var(--cor-card);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+  box-shadow: var(--sombra);
+  overflow: hidden;
+}
+
+.cartao-hotel__imagem {
+  display: block;
+  aspect-ratio: 4 / 3;
+  background: #2b2620;
+}
+.cartao-hotel__imagem img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Enquanto não há foto: bloco escuro com o nome da bandeira */
+.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-family: var(--fonte-titulo);
+  font-size: 1.6rem;
+  letter-spacing: 0.3em;
+  color: var(--cor-destaque);
+  background: linear-gradient(135deg, #1a1a1a, #3a322a);
+}
+
+.cartao-hotel__corpo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 1.25rem;
+  flex: 1;
+}
+.cartao-hotel__corpo h3 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+.cartao-hotel__corpo h3 a {
+  color: inherit;
+  text-decoration: none;
+}
+.cartao-hotel__corpo .btn {
+  margin-top: auto;
+  align-self: flex-start;
+}
+
+.etiqueta {
+  align-self: flex-start;
+  padding: 0.15rem 0.6rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: var(--cor-destaque-escura);
+  background: #f1e9db;
+
+  border-radius: 999px;
+}
+.local {
+  margin: 0;
+  color: var(--cor-texto-suave);
+  font-size: 0.9rem;
+}
+.preco {
+  margin: 0.25rem 0 0.75rem;
+  color: var(--cor-texto-suave);
+  font-size: 0.9rem;
+}
+.preco strong {
+  color: var(--cor-texto);
+  font-size: 1.15rem;
+}
+
+/* ===== Quartos do hotel ===== */
+.lista-quartos {
+  display: grid;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.quarto {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.25rem 1.5rem;
+  background: var(--cor-card);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+  box-shadow: var(--sombra);
+}
+.quarto__info h3 {
+  margin: 0 0 0.25rem;
+  font-size: 1.4rem;
+}
+.quarto__info p {
+  margin: 0 0 0.25rem;
+  color: var(--cor-texto-suave);
+}
+.quarto__capacidade {
+  font-size: 0.85rem;
+}
+.quarto__reserva {
+  text-align: right;
+  flex-shrink: 0;
+}
+.quarto__reserva .preco {
+  margin: 0 0 0.6rem;
+}
+
+@media (max-width: 900px) {
+  .busca {
+    grid-template-columns: 1fr 1fr;
+  }
+  .busca .campo:first-child {
+    grid-column: 1 / -1;
+  }
+  .busca .btn {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 720px) {
+  .quarto {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .quarto__reserva {
+    text-align: left;
+  }
 }
