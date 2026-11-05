@@ -491,3 +491,50 @@ img {
     text-align: left;
   }
 }
+
+/* ============================================================
+   Etapa 3A: página de reserva (datas e quartos disponíveis)
+   ============================================================ */
+
+.form-datas {
+  display: grid;
+  grid-template-columns: 1fr 1fr 0.7fr 0.7fr auto;
+  align-items: end;
+  gap: 1rem;
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+  background: var(--cor-card);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+  box-shadow: var(--sombra);
+}
+
+.resumo-estadia {
+  margin: 0 0 1.25rem;
+  color: var(--cor-texto-suave);
+}
+
+.quarto--indisponivel {
+  opacity: 0.65;
+}
+.quarto__aviso {
+  margin: 0.4rem 0 0;
+  font-size: 0.85rem;
+  color: var(--cor-perigo);
+}
+.quarto__aviso--ok {
+  color: var(--cor-destaque-escura);
+}
+.alerta ul {
+  margin: 0.5rem 0 0;
+  padding-left: 1.25rem;
+}
+
+@media (max-width: 900px) {
+  .form-datas {
+    grid-template-columns: 1fr 1fr;
+  }
+  .form-datas .btn {
+    grid-column: 1 / -1;
+  }
+}

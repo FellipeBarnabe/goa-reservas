@@ -23,12 +23,35 @@ if (campoCheckin && campoCheckout) {
     return `${d.getFullYear()}-${mes}-${dia}`;
   };
 
-  campoCheckin.addEventListener("change", () => {
+  const ajustarCheckout = () => {
     if (!campoCheckin.value) return;
     const minimo = diaSeguinte(campoCheckin.value);
     campoCheckout.min = minimo;
     if (campoCheckout.value && campoCheckout.value < minimo) {
       campoCheckout.value = minimo;
     }
+  };
+
+  campoCheckin.addEventListener("change", ajustarCheckout);
+  ajustarCheckout(); // páginas que já abrem com a data preenchida
+}
+
+// Máscara de telefone brasileiro: (83) 99999-9999
+const campoTelefone = document.querySelector('input[name="telefone"]');
+
+if (campoTelefone) {
+  const formatar = (valor) => {
+    const d = valor.replace(/\D/g, "").slice(0, 11);
+    if (d.length === 0) return "";
+    if (d.length <= 2) return "(" + d;
+    if (d.length <= 6) return "(" + d.slice(0, 2) + ") " + d.slice(2);
+    if (d.length <= 10)
+      return "(" + d.slice(0, 2) + ") " + d.slice(2, 6) + "-" + d.slice(6);
+    return "(" + d.slice(0, 2) + ") " + d.slice(2, 7) + "-" + d.slice(7);
+  };
+
+  campoTelefone.addEventListener("input", () => {
+    campoTelefone.value = formatar(campoTelefone.value);
   });
+  campoTelefone.value = formatar(campoTelefone.value);
 }
