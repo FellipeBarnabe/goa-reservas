@@ -212,3 +212,161 @@ function urlReserva(string $pagina, array $ctx, array $extra = []): string
 
     return url($pagina . '?' . http_build_query($params));
 }
+
+
+// ============================================================
+// Etapa 3B: dados do hóspede e gravação da reserva
+// ============================================================
+
+// Lê os dados do hóspede (de $_POST) e limpa os espaços das pontas
+function lerHospede(array $entrada): array
+{
+    $dados = [];
+    foreach (['nome', 'email', 'telefone', 'observacoes'] as $campo) {
+        $valor = $entrada[$campo] ?? '';
+        $dados[$campo] = is_string($valor) ? trim($valor) : '';
+    }
+    return $dados;
+}
+
+// Valida os dados do hóspede e devolve a lista de erros (vazia = tudo certo)
+function validarHospede(array $h): array
+{
+    $erros = [];
+
+    if ($h['nome'] === '') {
+        $erros[] = 'Informe o nome.';
+    } elseif (mb_strlen($h['nome']) > 120) {
+        $erros[] = 'O nome pode ter no máximo 120 caracteres.';
+    }
+
+    if ($h['email'] === '') {
+        $erros[] = 'Informe o e-mail.';
+    } elseif (!filter_var($h['email'], FILTER_VALIDATE_EMAIL)) {
+        $erros[] = 'E-mail inválido.';
+    } elseif (mb_strlen($h['email']) > 150) {
+        $erros[] = 'O e-mail pode ter no máximo 150 caracteres.';
+    }
+
+    $digitos = strlen(preg_replace('/\D/', '', $h['telefone']));
+    if ($h['telefone'] === '') {
+        $erros[] = 'Informe o telefone.';
+    } elseif (mb_strlen($h['telefone']) > 20) {
+        $erros[] = 'O telefone pode ter no máximo 20 caracteres.';
+    } elseif ($digitos < 10 || $digitos > 13) {
+        $erros[] = 'Informe um telefone válido, com DDD.';
+    }
+
+    if (mb_strlen($h['observacoes']) > 500) {
+        $erros[] = 'As observações podem ter no máximo 500 caracteres.';
+    }
+
+    return $erros;
+}
+
+// Código de consulta da reserva: GOA + 5 caracteres (sem 0, O, 1, I, para não confundir)
+function gerarCodigoReserva(): string
+{
+    $alfabeto = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+    $codigo = 'GOA';
+    for ($i = 0; $i < 5; $i++) {
+        $codigo .= $alfabeto[random_int(0, strlen($alfabeto) - 1)];
+    }
+    return $codigo;
+}
+
+// Grava a reserva. Devolve ['ok' => true, 'codigo' => ...] ou ['ok' => false, 'erro' => ...].
+//
+// PROTEÇÃO CONTRA RESERVA DUPLA: tudo acontece dentro de uma transação, e o
+// "FOR UPDATE" trava a linha do tipo de quarto. Se duas pessoas tentarem reservar
+// o último quarto ao mesmo tempo, a segunda espera a primeira terminar e, ao
+// conferir a disponibilidade, já enxerga a reserva da primeira.
+function criarReserva(PDO $pdo, array $d): array
+{
+    $pdo->beginTransaction();
+
+    try {
+        $stmt = $pdo->prepare(
+            'SELECT preco_diaria, quantidade, capacidade
+               FROM tipos_quarto
+              WHERE id = :id AND hotel_id = :hotel AND ativo = 1
+                FOR UPDATE'
+        );
+        $stmt->execute(['id' => $d['tipo_id'], 'hotel' => $d['hotel_id']]);
+        $tipo = $stmt->fetch();
+
+        if (!$tipo) {
+            $pdo->rollBack();
+            return ['ok' => false, 'erro' => 'Quarto não encontrado.'];
+        }
+
+        if ($d['adultos'] + $d['criancas'] > (int) $tipo['capacidade']) {
+            $pdo->rollBack();
+            return ['ok' => false, 'erro' => 'O quarto não comporta essa quantidade de hóspedes.'];
+        }
+
+        // Mesma regra de sobreposição da listagem
+        $stmt = $pdo->prepare(
+            "SELECT COUNT(*) FROM reservas
+              WHERE tipo_quarto_id = :tipo
+                AND status IN ('pendente', 'confirmada')
+                AND checkin  < :checkout
+                AND checkout > :checkin"
+        );
+        $stmt->execute(['tipo' => $d['tipo_id'], 'checkout' => $d['checkout'], 'checkin' => $d['checkin']]);
+
+        if ((int) $stmt->fetchColumn() >= (int) $tipo['quantidade']) {
+            $pdo->rollBack();
+            return ['ok' => false, 'erro' => 'O quarto ficou indisponível para essas datas.'];
+        }
+
+        // O valor total é SEMPRE calculado aqui, com o preço do banco
+        $noites = contarNoites($d['checkin'], $d['checkout']);
+        $total  = $noites * (float) $tipo['preco_diaria'];
+
+        // Gera um código que ainda não exista
+        $existe = $pdo->prepare('SELECT 1 FROM reservas WHERE codigo = :codigo');
+        do {
+            $codigo = gerarCodigoReserva();
+            $existe->execute(['codigo' => $codigo]);
+        } while ($existe->fetchColumn());
+
+        $stmt = $pdo->prepare(
+            'INSERT INTO reservas
+                (codigo, tipo_quarto_id, hospede_nome, hospede_email, hospede_telefone,
+                 checkin, checkout, adultos, criancas, valor_total, observacoes)
+             VALUES
+                (:codigo, :tipo, :nome, :email, :telefone,
+                 :checkin, :checkout, :adultos, :criancas, :total, :obs)'
+        );
+        $stmt->execute([
+            'codigo'   => $codigo,
+            'tipo'     => $d['tipo_id'],
+            'nome'     => $d['nome'],
+            'email'    => $d['email'],
+            'telefone' => $d['telefone'],
+            'checkin'  => $d['checkin'],
+            'checkout' => $d['checkout'],
+            'adultos'  => $d['adultos'],
+            'criancas' => $d['criancas'],
+            'total'    => number_format($total, 2, '.', ''),
+            'obs'      => $d['observacoes'] !== '' ? $d['observacoes'] : null,
+        ]);
+
+        $pdo->commit();
+        return ['ok' => true, 'codigo' => $codigo];
+    } catch (Throwable $e) {
+        if ($pdo->inTransaction()) {
+            $pdo->rollBack();
+        }
+        throw $e;
+    }
+}
+
+// Volta para a página de escolha de quartos, mantendo hotel, datas e quarto pedido
+function voltarParaQuartos(array $ctx): void
+{
+    $extra = $ctx['tipoId'] ? ['tipo' => (int) $ctx['tipoId']] : [];
+    header('Location: ' . urlReserva('reservar.php', $ctx, $extra));
+    exit;
+}
