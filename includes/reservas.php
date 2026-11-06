@@ -370,3 +370,32 @@ function voltarParaQuartos(array $ctx): void
     header('Location: ' . urlReserva('reservar.php', $ctx, $extra));
     exit;
 }
+
+// ============================================================
+// Etapa 3C: status da reserva
+// ============================================================
+
+const STATUS_RESERVA = [
+    'pendente'   => 'Pendente',
+    'confirmada' => 'Confirmada',
+    'cancelada'  => 'Cancelada',
+    'concluida'  => 'Concluída',
+];
+
+// "pendente" -> "Pendente"
+function rotuloStatus(string $status): string
+{
+    return STATUS_RESERVA[$status] ?? $status;
+}
+
+// Frase mostrada ao hóspede na página de confirmação
+function mensagemStatus(string $status): string
+{
+    return match ($status) {
+        'pendente'   => 'Recebemos o seu pedido. Ele aguarda a confirmação do hotel.',
+        'confirmada' => 'Sua reserva está confirmada.',
+        'cancelada'  => 'Esta reserva foi cancelada.',
+        'concluida'  => 'Esta estadia já foi concluída.',
+        default      => '',
+    };
+}

@@ -588,3 +588,50 @@ img {
     margin-bottom: 0.6rem;
   }
 }
+
+/* ============================================================
+   Etapa 3C: confirmação e status da reserva
+   ============================================================ */
+
+.codigo-reserva {
+  margin: 0.25rem 0 0.75rem;
+  font-family: var(--fonte-titulo);
+  font-size: clamp(2.2rem, 7vw, 3.4rem);
+  font-weight: 600;
+  letter-spacing: 0.15em;
+}
+
+.status {
+  display: inline-block;
+  padding: 0.15rem 0.8rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+.status--pendente {
+  background: #fff4d6;
+  color: #8a5a00;
+}
+.status--confirmada {
+  background: #ecf8f1;
+  color: var(--cor-sucesso);
+}
+.status--cancelada {
+  background: #fdf1ef;
+  color: var(--cor-perigo);
+}
+.status--concluida {
+  background: #ececec;
+  color: #444;
+}
+
+@media print {
+  .topo,
+  .rodape,
+  .form-acoes {
+    display: none;
+  }
+  body {
+    background: #fff;
+  }
+}
