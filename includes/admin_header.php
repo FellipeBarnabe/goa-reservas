@@ -4,8 +4,10 @@ $titulo      = $titulo ?? 'Painel';
 $paginaAtual = $paginaAtual ?? '';
 
 // Itens do menu do painel: chave => [texto, página]. A 4B inclui "Reservas".
+// Itens do menu do painel: chave => [texto, página]
 $menuAdmin = [
-    'painel' => ['Painel', 'admin/'],
+    'painel'   => ['Painel', 'admin/'],
+    'reservas' => ['Reservas', 'admin/reservas.php'],
 ];
 ?>
 <!DOCTYPE html>

@@ -736,3 +736,52 @@ img {
 .tabela small {
   color: var(--cor-texto-suave);
 }
+
+/* ============================================================
+   Etapa 4B: lista de reservas, filtros e detalhe
+   ============================================================ */
+
+.filtros {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 1rem;
+  align-items: end;
+  margin: 1.5rem 0;
+  padding: 1.25rem;
+  background: var(--cor-card);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+  box-shadow: var(--sombra);
+}
+.campo--busca {
+  grid-column: 1 / -1;
+}
+.filtros__acoes {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.paginacao {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  color: var(--cor-texto-suave);
+}
+
+.acoes-status {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+.acoes-status form {
+  margin: 0;
+}
+.btn--perigo {
+  background: var(--cor-perigo);
+  color: #fff !important;
+}
+.btn--perigo:hover {
+  background: #8f1c12;
+}

@@ -21,7 +21,7 @@ $checkinsHoje = (int) $stmt->fetchColumn();
 
 // As 5 reservas mais recentes
 $recentes = $pdo->query(
-    'SELECT r.codigo, r.hospede_nome, r.checkin, r.checkout, r.valor_total, r.status,
+    'SELECT r.id, r.codigo, r.hospede_nome, r.checkin, r.checkout, r.valor_total, r.status,
             t.nome AS quarto, h.nome AS hotel
        FROM reservas r
        JOIN tipos_quarto t ON t.id = r.tipo_quarto_id
@@ -74,7 +74,7 @@ require __DIR__ . '/../../includes/admin_header.php';
         <tbody>
           <?php foreach ($recentes as $r): ?>
             <tr>
-              <td><strong><?= e($r['codigo']) ?></strong></td>
+              <td><a href="<?= url('admin/reserva.php?id=' . (int) $r['id']) ?>"><strong><?= e($r['codigo']) ?></strong></a></td>
               <td><?= e($r['hospede_nome']) ?></td>
               <td><?= e($r['hotel']) ?><br><small><?= e($r['quarto']) ?></small></td>
               <td><?= data_br($r['checkin']) ?> a <?= data_br($r['checkout']) ?></td>
@@ -85,6 +85,7 @@ require __DIR__ . '/../../includes/admin_header.php';
         </tbody>
       </table>
     </div>
+    <p style="margin-top:1rem"><a href="<?= url('admin/reservas.php') ?>">Ver todas as reservas &rarr;</a></p>
   <?php endif; ?>
 </section>
 
