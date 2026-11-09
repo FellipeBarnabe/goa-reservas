@@ -649,6 +649,7 @@ img {
 }
 .login__marca {
   margin: 0 0 1rem;
+  color: var(--cor-escura);
 }
 .login__caixa h1 {
   font-size: 2.2rem;
