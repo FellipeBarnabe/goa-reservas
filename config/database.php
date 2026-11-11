@@ -1,10 +1,13 @@
 <?php
 require_once __DIR__ . '/config.php';
 
-$host    = 'localhost';
-$db      = 'goa_reservas';
-$user    = 'root';
-$pass    = '';          // Laragon e XAMPP: senha vazia (só em ambiente local)
+// Em desenvolvimento (Laragon/XAMPP) valem os valores abaixo: usuário root, senha vazia.
+// Em produção, defina as variáveis de ambiente GOA_DB_HOST, GOA_DB_NAME, GOA_DB_USER e GOA_DB_PASS
+// no servidor (assim a senha real nunca vai para o GitHub).
+$host    = getenv('GOA_DB_HOST') ?: 'localhost';
+$db      = getenv('GOA_DB_NAME') ?: 'goa_reservas';
+$user    = getenv('GOA_DB_USER') ?: 'root';
+$pass    = getenv('GOA_DB_PASS') !== false ? getenv('GOA_DB_PASS') : '';
 $charset = 'utf8mb4';
 
 $dsn = "mysql:host=$host;dbname=$db;charset=$charset";

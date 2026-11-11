@@ -840,3 +840,26 @@ img {
   width: auto;
   padding: 0;
 }
+
+.topo .btn--contorno {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.45);
+}
+.topo .btn--contorno:hover {
+  background: #fff;
+  color: var(--cor-texto);
+}
+
+.campo {
+  min-width: 0;
+}
+.campo input,
+.campo select,
+.campo textarea {
+  min-width: 0;
+}
+
+/* Textos longos (e-mails, nomes) quebram em vez de vazar do cartão */
+.detalhes dd {
+  overflow-wrap: anywhere;
+}
