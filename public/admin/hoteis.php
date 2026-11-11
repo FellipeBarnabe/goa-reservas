@@ -75,6 +75,7 @@ require __DIR__ . '/../../includes/admin_header.php';
               <td>
                 <div class="acoes-linha">
                   <a class="btn btn--contorno" href="<?= url('admin/hotel_form.php?id=' . (int) $h['id']) ?>">Editar</a>
+                  <a class="btn btn--contorno" href="<?= url('admin/quartos.php?hotel=' . (int) $h['id']) ?>">Quartos</a>
 
                   <form method="post" action="<?= url('admin/hoteis.php') ?>">
                     <?= csrfCampo() ?>
