@@ -785,3 +785,58 @@ img {
 .btn--perigo:hover {
   background: #8f1c12;
 }
+
+/* ============================================================
+   Etapa 5A: cadastro de hotéis
+   ============================================================ */
+
+.cabecalho-pagina {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.cabecalho-pagina h1 {
+  margin: 0;
+}
+
+.status--ativo {
+  background: #ecf8f1;
+  color: var(--cor-sucesso);
+}
+.status--oculto {
+  background: #ececec;
+  color: #444;
+}
+
+.acoes-linha {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.acoes-linha form {
+  margin: 0;
+}
+.acoes-linha .btn {
+  padding: 0.4rem 0.9rem;
+  font-size: 0.85rem;
+}
+
+/* Caixa de seleção com texto normal (não em maiúsculas) */
+.campo .check {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--cor-texto);
+  cursor: pointer;
+}
+.campo .check input {
+  width: auto;
+  padding: 0;
+}

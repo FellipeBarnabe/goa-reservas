@@ -157,19 +157,3 @@ function alterarStatus(PDO $pdo, int $id, string $novo): array
     return ['ok' => true, 'msg' => 'Status alterado para ' . rotuloStatus($novo) . '.'];
 }
 
-// ----- Aviso que sobrevive a um redirecionamento (mostra uma vez e some) -----
-
-function definirAviso(string $tipo, string $texto): void
-{
-    iniciarSessao();
-
-    $_SESSION['aviso'] = ['tipo' => $tipo, 'texto' => $texto];
-}
-
-function pegarAviso(): ?array
-{
-    iniciarSessao();
-    $aviso = $_SESSION['aviso'] ?? null;
-    unset($_SESSION['aviso']);
-    return $aviso;
-}
