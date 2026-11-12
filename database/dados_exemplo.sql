@@ -14,6 +14,8 @@ INSERT INTO tipos_quarto (hotel_id, nome, descricao, capacidade, preco_diaria, q
 (3, 'Superior',      'Quarto aconchegante com lareira.',             2, 480.00,  8),
 (3, 'Suíte Família', 'Suíte com sala e duas camas.',                 4, 690.00,  3);
 
+-- Usuário administrador de demonstração
 -- Administrador de teste: e-mail admin@goa.test | senha admin123 (trocar em produção)
+-- (trocar obrigatoriamente em ambiente de produção)
 INSERT INTO usuarios (nome, email, senha_hash) VALUES
 ('Administrador', 'admin@goa.test', '$2y$10$UUAdE7bSxKU63fVedBKo0e0bZVSbZ/.FI43etSIQMBcUXwppICpN6');
